@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Animation with JavaScript</title>
+  <style>
+    /* Add a simple bounce animation */
+    @keyframes bounce {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    .bounce-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .bounce-button:hover {
+      background-color: #45a049;
+    }
+
+    /* Add the animation when triggered */
+    .animate-bounce {
+      animation: bounce 0.5s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Button to trigger animation -->
+  <button class="bounce-button" id="bounceBtn">Click Me</button>
+
+  <script>
+    // JavaScript to handle localStorage and trigger animation
+    const bounceBtn = document.getElementById('bounceBtn');
+
+    // Retrieve user preference for button style (whether animation was triggered before)
+    const buttonClicked = localStorage.getItem('buttonClicked') === 'true';
+
+    // Apply the bounce animation if previously triggered
+    if (buttonClicked) {
+      bounceBtn.classList.add('animate-bounce');
+    }
+
+    // Add click event to trigger animation and store preference
+    bounceBtn.addEventListener('click', () => {
+      bounceBtn.classList.add('animate-bounce');
+      // Store that the button has been clicked
+      localStorage.setItem('buttonClicked', 'true');
+
+      // Remove the animation class after the animation ends (so it can be triggered again)
+      bounceBtn.addEventListener('animationend', () => {
+        bounceBtn.classList.remove('animate-bounce');
+      });
+    });
+  </script>
+
+</body>
+</html>
